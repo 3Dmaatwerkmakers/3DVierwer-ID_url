@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
 // Maak de Google Drive API client
 async function getFile(fileId) {
   const auth = new google.auth.GoogleAuth({
-    keyFile: 'path-to-your-service-account-key.json', // Voeg hier je Google Service Account Key toe
+    keyFile: process.env.GOOGLE_SERVICE_ACCOUNT_KEY,// Voeg hier je Google Service Account Key toe
     scopes: ['https://www.googleapis.com/auth/drive.readonly'],
   });
   const client = await auth.getClient();
