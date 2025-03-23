@@ -1,4 +1,7 @@
 const express = require('express');
+const cors = require('cors');
+app.use(cors());  // Dit staat alle bronnen toe om toegang te krijgen tot je API
+
 const { google } = require('googleapis');
 const app = express();
 const port = process.env.PORT || 3000;
