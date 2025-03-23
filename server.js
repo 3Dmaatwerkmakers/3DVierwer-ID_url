@@ -3,6 +3,11 @@ const { google } = require('googleapis');
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Voeg de root route toe voor de homepage
+app.get('/', (req, res) => {
+  res.send('Server is running!');
+});
+
 // Maak de Google Drive API client
 async function getFile(fileId) {
   const auth = new google.auth.GoogleAuth({
@@ -36,5 +41,3 @@ app.get('/file/:id', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-
-
