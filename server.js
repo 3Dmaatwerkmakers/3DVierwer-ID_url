@@ -7,6 +7,11 @@ const port = process.env.PORT || 3000;
 // Zorg ervoor dat CORS voor de app wordt ingesteld vóór de routes
 app.use(cors());  // Dit staat alle bronnen toe om toegang te krijgen tot je API
 
+// Voeg de test route toe
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'Test route is working!' });
+});
+
 // Maak de Google Drive API client
 async function getFile(fileId) {
   const auth = new google.auth.GoogleAuth({
