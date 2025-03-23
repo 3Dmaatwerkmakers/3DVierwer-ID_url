@@ -3,25 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>3D Configurator</title>
+  <title>API Test</title>
 </head>
 <body>
 
-  <h1>Test Google Drive API</h1>
-
-  <div id="fileData"></div>
+  <h1>Test de API verbinding</h1>
+  
+  <div id="apiResponse"></div>
 
   <script>
-    // Testen of de API goed werkt
-    fetch('https://threed-configurator.onrender.com/file/1XToSdQvAHywyAm7vk0xvacu5EjpcUyxr')
+    // Testen of de API goed reageert
+    fetch('https://threed-configurator.onrender.com/api/test')
       .then(response => response.json())
       .then(data => {
-        console.log('File data:', data);  // Je kunt de data loggen voor debugging
-        document.getElementById('fileData').textContent = JSON.stringify(data, null, 2); // Toon de data in je HTML
+        // Toon de ontvangen boodschap in de HTML
+        document.getElementById('apiResponse').textContent = data.message;
       })
       .catch(error => {
-        console.error('Error fetching data from API:', error);
-        document.getElementById('fileData').textContent = 'Er is een fout opgetreden bij het ophalen van het bestand.';
+        console.error('Fout bij het ophalen van de API:', error);
+        document.getElementById('apiResponse').textContent = 'Er is een fout opgetreden bij het ophalen van de API.';
       });
   </script>
 
