@@ -15,28 +15,37 @@
     <script>
         // Scene setup
         const scene = new THREE.Scene();
+        
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer();
+        camera.position.set(0, 2, 5); // Camera iets hoger en verder zetten
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
-        // Light
-        const light = new THREE.AmbientLight(0xffffff, 1);
-        scene.add(light);
+        // Lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // Zachter licht
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(2, 2, 5);
+        scene.add(directionalLight);
+
+        const hemisphereLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
+        scene.add(hemisphereLight);
 
         // GLTF Loader
         const loader = new THREE.GLTFLoader();
-        const modelUrl = 'https://www.googleapis.com/drive/v3/files/1XVVwcHgRMTzMp9CaPVvalj6IRQMrktNX?alt=media&key=AIzaSyBJi5XYF7oaLS5W7RPfX4m3HqcCK8i_jcs'; // Vervang dit met de directe URL van je .glb bestand in GitHub
+        const modelUrl = 'https://www.googleapis.com/drive/v3/files/1XVVwcHgRMTzMp9CaPVvalj6IRQMrktNX?alt=media&key=AIzaSyBJi5XYF7oaLS5W7RPfX4m3HqcCK8i_jcs'; // Vervang dit met de directe Google Drive API URL
         
         loader.load(modelUrl, function (gltf) {
-            scene.add(gltf.scene);
-            gltf.scene.position.set(0, 0, 0);
+            const model = gltf.scene;
+            model.scale.set(2, 2, 2); // Model opschalen indien nodig
+            model.position.set(0, 0, 0); // Model centreren
+            scene.add(model);
         }, undefined, function (error) {
             console.error('Fout bij laden model:', error);
         });
-
-        // Camera positie
-        camera.position.z = 2;
 
         // Render loop
         function animate() {
@@ -44,6 +53,13 @@
             renderer.render(scene, camera);
         }
         animate();
+
+        // Resize event listener
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+        });
     </script>
 </body>
 </html>
