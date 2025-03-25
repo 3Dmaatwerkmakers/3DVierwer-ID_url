@@ -7,6 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/GLTFLoader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/DRACOLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/controls/OrbitControls.js"></script>
     <style>
         body { margin: 0; overflow: hidden; }
         canvas { display: block; }
@@ -60,8 +61,8 @@
         // Show loader indicator
         document.getElementById('loader').style.display = 'block';
 
-        // Model URL (replace with your model URL from the repository)
-        const modelUrl = 'https://github.com/3Dmaatwerkmakers/3D_configurator/blob/main/F1-oldtimer.glb'; // Example GLB model URL
+        // Model URL (replace with your model URL from GitHub Pages)
+        const modelUrl = 'https://3dmaatwerkmakers.github.io/3D_configurator/F1-oldtimer.glb'; // Example GLB model URL
 
         // Load the model
         loader.load(modelUrl, function (gltf) {
