@@ -6,12 +6,25 @@
     <title>Three.js GLB Viewer</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/DRACOLoader.js"></script>
     <style>
         body { margin: 0; overflow: hidden; }
         canvas { display: block; }
+        #loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 30px;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: none;
+        }
     </style>
 </head>
 <body>
+    <div id="loader">Loading...</div>
+
     <script>
         // Scene setup
         const scene = new THREE.Scene();
@@ -31,17 +44,38 @@
         directionalLight.position.set(5, 5, 5);
         scene.add(directionalLight);
 
-        // GLTF Loader
-        const loader = new THREE.GLTFLoader();
-        const modelUrl = 'F1-oldtimer.glb'; // Vervang met werkende URL
+        // Draco Loader setup
+        const dracoLoader = new THREE.DRACOLoader();
+        dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three/examples/js/libs/draco/');
         
+        // GLTF Loader setup
+        const loader = new THREE.GLTFLoader();
+        loader.setDRACOLoader(dracoLoader);
+
+        // Show loader indicator
+        document.getElementById('loader').style.display = 'block';
+        
+        // Model URL
+        const modelUrl = 'F1-oldtimer.glb'; // Replace with valid URL
+        
+        // Load the model
         loader.load(modelUrl, function (gltf) {
             const model = gltf.scene;
             model.scale.set(1.5, 1.5, 1.5);
             model.position.set(0, -1, 0);
             scene.add(model);
-        }, undefined, function (error) {
-            console.error('Fout bij laden model:', error);
+            
+            // Hide loader when model is loaded
+            document.getElementById('loader').style.display = 'none';
+        }, 
+        // Update progress
+        function (xhr) {
+            const progress = (xhr.loaded / xhr.total) * 100;
+            console.log('Model loading ' + progress.toFixed(2) + '%');
+        }, 
+        // Error handling
+        function (error) {
+            console.error('Error loading model:', error);
         });
 
         // Orbit Controls
