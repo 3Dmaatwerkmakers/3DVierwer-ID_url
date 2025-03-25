@@ -36,6 +36,7 @@
 
         // Renderer setup
         const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setPixelRatio(window.devicePixelRatio); // Verbeter de beeldkwaliteit
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
