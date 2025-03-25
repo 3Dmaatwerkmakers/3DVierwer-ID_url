@@ -1,29 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>API Test</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three.js GLB Loader</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three/examples/js/loaders/GLTFLoader.js"></script>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
 </head>
 <body>
+    <script>
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
 
-  <h1>Test de API verbinding 4</h1>
-  
-  <div id="apiResponse"></div>
+        // Light
+        const light = new THREE.AmbientLight(0xffffff, 1);
+        scene.add(light);
 
-  <script>
-    // Testen of de API goed reageert
-    fetch('https://threed-configurator.onrender.com/api/test')
-      .then(response => response.json())
-      .then(data => {
-        // Toon de ontvangen boodschap in de HTML
-        document.getElementById('apiResponse').textContent = data.message;
-      })
-      .catch(error => {
-        console.error('Fout bij het ophalen van de API:', error);
-        document.getElementById('apiResponse').textContent = 'Er is een fout opgetreden bij het ophalen van de API.';
-      });
-  </script>
+        // GLTF Loader
+        const loader = new THREE.GLTFLoader();
+        const modelUrl = 'URL_VAN_JE_GLB_BESTAND'; // Vervang dit met de directe URL van je .glb bestand in GitHub
+        
+        loader.load(modelUrl, function (gltf) {
+            scene.add(gltf.scene);
+            gltf.scene.position.set(0, 0, 0);
+        }, undefined, function (error) {
+            console.error('Fout bij laden model:', error);
+        });
 
+        // Camera positie
+        camera.position.z = 2;
+
+        // Render loop
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
 </body>
 </html>
