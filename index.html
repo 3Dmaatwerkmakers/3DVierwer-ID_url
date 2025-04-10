@@ -27,13 +27,15 @@
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const driveId = urlParams.get('drive');
+    
+    // Stel de API-sleutel in vanuit een veilige plek (bijvoorbeeld een .env bestand of backend).
     const apiKey = 'AIzaSyC0eqDXxC_nhueQ_1z3S11N1PbHWzy1m1k';  // Zet hier je eigen Google API-sleutel
 
     if (driveId && apiKey) {
-      const modelUrl = https://www.googleapis.com/drive/v3/files/${driveId}?alt=media&key=${apiKey};
+      const modelUrl = `https://www.googleapis.com/drive/v3/files/${driveId}?alt=media&key=${apiKey}`;
       document.getElementById('viewer').src = modelUrl;
     } else {
-      document.body.innerHTML += <p style="color:red;">❗ Geen 'drive' parameter of API-sleutel gevonden in de URL.</p>;
+      document.body.innerHTML += `<p style="color:red;">❗ Geen 'drive' parameter of API-sleutel gevonden in de URL.</p>`;
     }
   </script>
 </body>
