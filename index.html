@@ -27,9 +27,7 @@
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const driveId = urlParams.get('drive');
-    
-    // Stel de API-sleutel in vanuit een veilige plek (bijvoorbeeld een .env bestand of backend).
-    const apiKey = 'AIzaSyC0eqDXxC_nhueQ_1z3S11N1PbHWzy1m1k';  // Zet hier je eigen Google API-sleutel
+    const apiKey = urlParams.get('key');  // Haal de API-sleutel uit de URL
 
     if (driveId && apiKey) {
       const modelUrl = `https://www.googleapis.com/drive/v3/files/${driveId}?alt=media&key=${apiKey}`;
